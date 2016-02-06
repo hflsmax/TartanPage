@@ -1,0 +1,76 @@
+@import url(reset.css);
+
+body {
+    background: url(../images/cmucampus.jpg);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    
+}
+
+#rectangleone {
+    width: auto;
+    height: 220px;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-family: Verdana, Geneva, sans-serif;
+    color: white;
+    float: left;
+    display: inline-block;
+}
+
+ul {
+    float: right;
+     display: inline-block;
+    width: 30%;
+}
+
+ul li {
+ 
+    display: inline-block;
+    
+}
+
+ul li a {
+    width: 100%;
+    text-decoration: none;
+      display: inline-block;
+    
+}
+
+ul li img {
+    width: 15%;
+    
+}
+
+
+#rectangletwo {
+    width: auto;
+    height: 370px;
+    background: #000;
+    opacity: .75;
+    
+}
+
+div.entire {
+    
+
+}
+
+div.useblock {
+    display: inline-block;
+    border: 1px solid black;
+    background: #fcf;
+    margin-right: 30px;
+    width: 30%;
+    
+    
+}
+
+
+
+.clear {
+    clear: both;
+}
