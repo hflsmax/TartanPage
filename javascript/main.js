@@ -110,15 +110,12 @@ function updateClock() {
         getBustime();
     }, 60000); */
     
-    var bgTimer = setTimeout(function () {
-        updateBg();
-    }, 6000);
-    
+    var bgTimer = setInterval(updateBg, 8000);
     
     updateDiningOptions();
     createClock();
-    //getBustime();
     updateBg();
+    
 }
 
 
@@ -338,21 +335,22 @@ function putOnBustime(busInfo) {
     /*******        Background       ***********/
     /*******************************************/
 
-/*
 function updateBg() {
-    bgIndex = bgIndex + 1;
-    
-    if (bgIndex > bgMax || bgIndex == bgMax) {
-        bgIndex = 0;
+    if (bgIndex < 0) {
+        bgIndex = bgIndex + 1;
+    } else {
+        bgIndex = bgIndex + 1;
+        if (bgIndex > bgMax || bgIndex == bgMax) {
+            bgIndex = 0;
+        }
+        $('.background').fadeOut(600, function() {
+            $('.background').attr('src', 'images/background/'+ bgIndex +'.gif');
+            $('.background').fadeIn(600);
+        });
     }
     
-    $('#background').fadeOut(400, function() {
-        $('#background').attr('src', 'images/background/'+bgIndex+'.gif');
-    }).fadeIn(400);
-    
-}
+} 
 
-*/
 
    /********************************************/
     /**********        Weather       ***********/

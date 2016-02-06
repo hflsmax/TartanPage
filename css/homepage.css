@@ -70,14 +70,19 @@ textarea {
     font-size: 150px;   
 }
 
-#background {
- position: absolute;
- z-index: -1000;
- max-width: 100%;
+.nextBg {
+    visibility: hidden;
+}
+
+.background {
+    position: absolute;
+    z-index: -1000;
+    max-width: 100%;
     
 }
 
 body {
+    background-color: black;
     overflow: hidden;
     background-repeat: no-repeat;
     background-position: right top;
