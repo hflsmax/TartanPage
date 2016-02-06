@@ -3,30 +3,58 @@ function getBustime() {
 	$.ajax({
 		url: 'http://truetime.portauthority.org/bustime/wireless/html/eta.jsp?route=---&direction=---&displaydirection=---&stop=---&id=4407',
 		success: function(text) {
-			console.log(text)
 			var busRegex = /<b>#(.*)&nbsp;/g;
 			var busNumers = [];
 			var busTimes = [];
 			while (busStr = busRegex.exec(text)) {
 				busNumers.push(busStr[1]);
 			}
-			console.log(busNumers);
 
 			
 			var busTimeRegex = /<b>(DUE|.*MIN)<\/b>/g;
 			while (busStr = busTimeRegex.exec(text)) {
 				busTimes.push(busStr[1].replace("&nbsp;", ""))
 			}
-			console.log(busTimes);
 
 			busInfo = [];
 			for (var i = 0; i < busNumers.length; i++) {
-				busInfo.push([busNumers[i], busTimes[i]]);
+				busInfo.push({
+					name: busNumers[i], 
+					time: busTimes[i]
+				})
 			}
-			console.log(busInfo);
-			return(busInfo);
+			putOnBustime(busInfo);
 		}
 	})
 }
 
-getBustime();
+function putOnBustime(busInfo) {
+
+	var container = document.getElementById('busContainer');
+	var ul = document.createElement('ul');
+	ul.setAttribute('id', 'morewood');
+	ul.setAttribute('class', 'busStop');
+
+	container.appendChild(ul);
+	busInfo.forEach(renderBusList);
+
+	function renderBusList(ele, ind, arr) {
+		var li = document.createElement('li');
+		var name = document.createElement('div');
+		name.setAttribute('class', 'bus');
+		name.innerHTML = ele.name;
+		var time = document.createElement('div');
+		time.setAttribute('class', 'time');
+		time.innerHTML = ele.time;
+		li.appendChild(name);
+		li.appendChild(time);
+
+		ul.appendChild(li);
+	}
+
+}
+
+window.onload = function() {
+	getBustime();
+}
+

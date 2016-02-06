@@ -90,10 +90,37 @@ function getDining(){
 				})
 
 			}
-			console.log(diningInfo);
+			putOnDiningOption(diningInfo);
 		}
 	})
 }
 
+function putOnDiningOption(diningInfo) {
+	var container = document.getElementById('diningContainer');
+	var ul = document.createElement('ul');
+	ul.setAttribute('class', 'diningOptions');
 
-getDining()
+	container.appendChild(ul);
+	diningInfo.forEach(renderBusList);
+
+	function renderBusList(ele, ind, arr) {
+		var li = document.createElement('li');
+		li.setAttribute('class', 'rank'+ele.rank);
+
+		var name = document.createElement('div');
+		name.setAttribute('class', 'place');
+		name.innerHTML = ele.name;
+		var time = document.createElement('div');
+		time.setAttribute('class', 'message');
+		time.innerHTML = ele.message;
+		li.appendChild(name);
+		li.appendChild(time);
+
+		ul.appendChild(li);
+	}
+}
+
+
+window.onload = function() {
+	getDining();
+}
