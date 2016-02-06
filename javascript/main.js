@@ -1,29 +1,31 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 var newDate, curMin, curHour, month, curDay, year;
+var bgIndex = -1;
+var bgMax = 4;
 
 function main() {
     'use strict';
-     
-    var userName = localStorage.getItem("userName")
-    if (userName != null) {
+
+    var userName = localStorage.getItem("userName");
+    if (userName !== null) {
         $('#startPage').hide();
-        $('#userName').text(userName+"!");
+        $('#userName').text(userName + "!");
     }
-    
+
     $('textarea').bind("enterKey",function(e){
         userName = $('textarea').val();
         $('#startPage').fadeOut(350);
         $('body').fadeIn(350);
-        
+
         if(typeof(Storage) !== "undefined") {
             localStorage.setItem("userName", userName);
         }
-        
-        $('#userName').text(userName);       
-        
+
+        $('#userName').text(userName);
+
     });
-    
+
     $('textarea').keydown(function(e){
         if(e.keyCode === 13)
         {
@@ -31,49 +33,49 @@ function main() {
             return false;
         }
     });
-    
+
     $('textarea').keyup(function(e){
         if(e.keyCode === 13)
         {
             e.preventDefault();
             $(this).trigger("enterKey");
-            
-        }   
+
+        }
     });
-    
+
     updateClock()
 }
 
 
 
-    
+
 
 
     /********************************************/
     /**********    Digital Clock      ***********/
     /*******************************************/
 
-    
+
 
 function updateClock() {
     var months = ["January", "February", "March", "April", "May",
                   "June", "July", "August", "September", "October",
                   "November", "December"]
     var iths = ["st", "nd", "rd", "th"]
-    
-    
+
+
     function ithsX(i) {
-        if (i == 1 || i == 21 || i == 31) { 
+        if (i == 1 || i == 21 || i == 31) {
             return iths[0];
         }else if (i == 2 || i == 22) {
             return iths[1];
         }else if (i == 3 || i == 23) {
             return iths[2];
         }else {
-            return iths[3];   
+            return iths[3];
         }
     }
-    
+
     function doubleDigit(i) {
         if (i < 10) {
             return "0" + i;
@@ -81,7 +83,7 @@ function updateClock() {
             return i;
         }
     }
-    
+
     function createClock() {
         newDate = new Date();
         curMin = newDate.getMinutes();
@@ -89,23 +91,36 @@ function updateClock() {
         month = newDate.getMonth();
         curDay = newDate.getDay();
         year = newDate.getFullYear();
-        
-        
+
+
         $('#time').text(doubleDigit(curHour) + ":" + doubleDigit(curMin));
         $('#date').text(months[month] + " " + curDay + ithsX(curDay) + ", " + year);
 
-    } 
+    }
     var timer = setTimeout(function () {
         createClock();
-    }, 1000); 
+    }, 1000);
 
     var diningTimer = setTimeout(function () {
         updateDiningOptions();
     }, 60000);
 
     updateDiningOptions();
-    
+
+    /*
+    var busTimer = setTimeout(function () {
+        getBustime();
+    }, 60000); */
+
+    var bgTimer = setTimeout(function () {
+        updateBg();
+    }, 6000);
+
+
+    updateDiningOptions();
     createClock();
+    //getBustime();
+    updateBg();
 }
 
 
@@ -115,18 +130,16 @@ function updateClock() {
     /**********    Dining Services   ***********/
     /*******************************************/
 
-    
-
 
 
 function getDay() {
-return 1;
+return curDay;
 }
 
 function getTime() {
     return {
-        hour: 2,
-        min: 2
+        hour: curHour,
+        min: curMin
     }
 }
 
@@ -256,5 +269,169 @@ function putOnDiningOption(diningInfo) {
     }
 
 }
+
+
+    /********************************************/
+    /**********      Bus Services    ***********/
+    /*******************************************/
+/*
+    function getBustime() {
+
+	$.ajax({
+		url: 'http://truetime.portauthority.org/bustime/wireless/html/eta.jsp?route=---&direction=---&displaydirection=---&stop=---&id=4407',
+		success: function(text) {
+			var busRegex = /<b>#(.*)&nbsp;/g;
+			var busNumers = [];
+			var busTimes = [];
+			while (busStr = busRegex.exec(text)) {
+				busNumers.push(busStr[1]);
+			}
+
+
+			var busTimeRegex = /<b>(DUE|.*MIN)<\/b>/g;
+			while (busStr = busTimeRegex.exec(text)) {
+				busTimes.push(busStr[1].replace("&nbsp;", ""))
+			}
+
+			busInfo = [];
+			for (var i = 0; i < busNumers.length; i++) {
+				busInfo.push({
+					name: busNumers[i],
+					time: busTimes[i]
+				})
+			}
+			putOnBustime(busInfo);
+		}
+	})
+}
+
+function putOnBustime(busInfo) {
+
+	var container = document.getElementById('busContainer');
+	var ul = document.createElement('ul');
+	ul.setAttribute('id', 'morewood');
+	ul.setAttribute('class', 'busStop');
+
+	container.appendChild(ul);
+	busInfo.forEach(renderBusList);
+
+    if (busInfo.length() === 0) {
+        var li = document.createElement('li');
+        li.innerHTML = "No Available Buses";
+        ul.appendChild(li);
+    }
+
+	function renderBusList(ele, ind, arr) {
+		var li = document.createElement('li');
+		var name = document.createElement('div');
+		name.setAttribute('class', 'bus');
+		name.innerHTML = ele.name;
+		var time = document.createElement('div');
+		time.setAttribute('class', 'time');
+		time.innerHTML = ele.time;
+		li.appendChild(name);
+		li.appendChild(time);
+
+		ul.appendChild(li);
+	}
+
+}
+
+*/
+   /********************************************/
+    /*******        Background       ***********/
+    /*******************************************/
+
+/*
+function updateBg() {
+    bgIndex = bgIndex + 1;
+
+    if (bgIndex > bgMax || bgIndex == bgMax) {
+        bgIndex = 0;
+    }
+
+    $('#background').fadeOut(400, function() {
+        $('#background').attr('src', 'images/background/'+bgIndex+'.gif');
+    }).fadeIn(400);
+
+}
+
+*/
+
+   /********************************************/
+    /**********        Weather       ***********/
+    /*******************************************/
+
+
+function getHilo() {
+    $(document).ready(function() {
+        $.simpleWeather({
+            location: 'Pittsburgh, PA',
+            woeid: '',
+            unit: 'f',
+            success: function(weather) {
+                html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+                html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+                html += '<li class="currently">'+weather.currently+'</li>';
+                html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+                $("#weather").html(html);
+                var hilo = [weather.high, weather.low];
+                getCur(hilo);
+            },
+            error: function(error) {
+                $("#weather").html('<p>'+error+'</p>');
+            }
+        })
+    })
+}
+
+function getCur(hilo) {
+    $.ajax({
+        url: "http://api.wunderground.com/api/1205bbca123028ac/conditions/q/PA/Pittsburgh.json",
+        success: function(data) {
+            var cur = [data.current_observation.weather, data.current_observation.temp_f];
+            getDaily(hilo, cur);
+        }
+    })
+}
+
+function getDaily(hilo, cur) {
+    $.ajax({
+        url: "http://api.wunderground.com/api/1205bbca123028ac/forecast/q/PA/Pittsburgh.json",
+        success: function(data) {
+            //Each list represents a day. Each sublist represents weather code, hi, lo, and cur temp(for today).
+            var lst = [[cur[0], hilo[0], hilo[1], cur[1]]];
+            for (var i = 1; i < 4; i++) {
+                var x = data.forecast.simpleforecast.forecastday[i];
+                lst.push([x.conditions, x.high.fahrenheit, x.low.fahrenheit]);
+            }
+            getHourly(lst);
+        }
+    })
+}
+
+function getHourly(lst) {
+    $.ajax({
+        url: "http://api.wunderground.com/api/1205bbca123028ac/hourly/q/PA/Pittsburgh.json",
+        success: function(data) {
+            //Each list represents an hour. Each sublist represents weather code, temp.
+            var hLst = []
+            for (var i = data.hourly_forecast[0].FCTTIME.hour; i < 24; i++) {
+                hLst.push([data.hourly_forecast[i].condition]);
+            }
+            finish(lst, hLst);
+        }
+    })
+}
+
+function finish(lst, hLst) {
+    return (lst, hLst);
+}
+
+getHilo();
+
+
+
+
 
 $(document).ready(main);
