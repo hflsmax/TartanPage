@@ -202,7 +202,7 @@ function updateDiningOptions(){
                             message = "Closed"
                             rank = 4;
                         } else {
-                            message = "Opening";
+                            message = "Opened";
                             rank = 0;
                         }
                     } else {
@@ -306,6 +306,12 @@ function getBustime() {
 function putOnBustime(busInfo) {
 
 	var container = document.getElementById('busContainer');
+
+    
+    // Remove old dom elements
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 	var ul = document.createElement('ul');
 	ul.setAttribute('id', 'morewood');
 	ul.setAttribute('class', 'busStop');
@@ -375,7 +381,7 @@ function putOnWeather() {
             for (var i = 1; i < 4; i++) {
                 var x = data.forecast.simpleforecast.forecastday[i]
                 lst.push({
-                    weekday: weekday_short,
+                    weekday: x.date.weekday_short,
                     weather: x.conditions, 
                     hi: x.high.fahrenheit, 
                     lo: x.low.fahrenheit, 
@@ -393,14 +399,18 @@ function getHourly(lst) {
         success: function(data) {
             //Each list represents an hour. Each sublist represents weather code, temp.
             var hLst = []
-            for (var i = data.hourly_forecast[0].FCTTIME.hour; i < 24; i++) {
+            for (var i = 0; i < 24; i++) {
+                var x = data.hourly_forecast[i];
                 hLst.push({
-                    weather: data.hourly_forecast[i].condition,
-                    temp: data.hourly_forecast[i].temp.english,
-                    hour: data.hourly_forecast[i].hour_padded,
-                    iconURL: data.hourly_forecast[i].icon_url
+                    weather: x.condition,
+                    temp: x.temp.english,
+                    hour: x.FCTTIME.hour,
+                    iconURL: x.icon_url
                 })
-            return updatingWeather(lst, hLst)
+                console.log(hLst)
+                
+           }
+           return updatingWeather(lst, hLst)
         }
     })
 }
@@ -424,8 +434,8 @@ function updatingWeather(lst, hLst) {
         var weekday = document.createElement('div');
         weekday.innerHTML = ele.weekday;
 
-        var weather = document.createElement('div');
-        weather.innerHTML = ele.weather;
+        // var weather = document.createElement('div');
+        // weather.innerHTML = ele.weather;
 
         var lo = document.createElement('div');
         lo.innerHTML = ele.lo;
@@ -437,10 +447,10 @@ function updatingWeather(lst, hLst) {
         icon.setAttribute('src', ele.iconURL);
 
         li.appendChild(weekday);
-        li.appendChild(weather);
+        // li.appendChild(weather);
         li.appendChild(lo);
         li.appendChild(hi);
-        li.appendChild(iconURL);
+        li.appendChild(icon);
         ulDaily.appendChild(li);
     }
 
@@ -453,10 +463,10 @@ function updatingWeather(lst, hLst) {
         var li = document.createElement('li');
 
         var hour = document.createElement('div');
-        hour.innerHTML = ele.hour;
+        hour.innerHTML = ele.hour + ":00";
 
-        var weather = document.createElement('div');
-        weather.innerHTML = ele.weather;
+        // var weather = document.createElement('div');
+        // weather.innerHTML = ele.weather;
 
         var temp = document.createElement('div');
         temp.innerHTML = ele.temp;
@@ -465,7 +475,7 @@ function updatingWeather(lst, hLst) {
         icon.setAttribute('src', ele.iconURL);
 
         li.appendChild(hour);
-        li.appendChild(weather);
+        // li.appendChild(weather);
         li.appendChild(temp);
         li.appendChild(icon);
 
