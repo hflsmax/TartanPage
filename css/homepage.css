@@ -1,0 +1,162 @@
+@import url(reset.css);
+
+#startPage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    z-index: 10;
+}
+
+#openingText {
+    height: 25px;
+    width: 250px;
+    left: 45%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+#hi {
+    position: absolute;
+    width:20px;
+    height: 20px;
+    float: left;
+    left: 42%;
+    top: 45.5%;
+    color: white;
+}
+
+textarea {
+    border: 0px;
+    position: absolute;
+    height: 20px;
+    left: 44%;
+    top: 45%;
+    outline: none;
+    resize: none;
+    float: left;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+
+#clock {
+    position: absolute;
+    width: 100%;
+    margin-top: 3%;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-style: bold;  
+}
+
+#time {
+    font-size: 150px;   
+}
+
+#background {
+ position: absolute;
+ z-index: -1000;
+ max-width: 100%;
+    
+}
+
+body {
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    
+}
+
+#rectangleone {
+    width: auto;
+    height: 220px;
+}
+
+h1 {
+    left: 10%;
+    font-size: 2.5em;
+    font-family: Verdana, Geneva, sans-serif;
+    color: white;
+    float: left;
+    display: inline-block;
+}
+
+
+#intro {
+   position: absolute;
+   padding-left: 5%;
+   padding-top: 8%;
+}
+
+#userName {
+    margin-left: 10px;
+    
+}
+
+ul {
+    padding-top: 7.5%;
+    float: right;
+    display: inline-block;
+    width: 30%;
+}
+
+ul li {
+    margin-left: 15px;
+    display: inline;
+}
+
+ul li a {
+    width: 100%;
+    align-content: center;
+    text-decoration: none;
+    
+}
+
+ul li img {
+    width: 15%;
+    
+}
+
+
+#rectangletwo {
+    top: 50%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .75;
+    
+}
+
+div.entire {
+    width: 80%;
+    padding-left: 13.75%;
+
+}
+
+div.useblock {
+    display: inline-block;
+    border: 1px solid black;
+    background: #ccc;
+    margin-top: 1%;
+    margin-right: 25px;
+    text-align: center;
+    width: 27%;
+    padding-bottom: 30%;
+    
+    
+}
+div.useblock p{
+    padding-top: 5%;
+    font-style: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+
+
+.clear {
+    clear: both;
+}
