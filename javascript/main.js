@@ -8,10 +8,12 @@ function main() {
     'use strict';
 
     var userName = localStorage.getItem("userName");
+    
     if (userName !== null) {
         $('#startPage').hide();
         $('#userName').text(userName + "!");
     }
+
 
     $('textarea').bind("enterKey",function(e){
         userName = $('textarea').val();
@@ -107,19 +109,17 @@ function updateClock() {
 
     updateDiningOptions();
 
-    /*
+    
     var busTimer = setTimeout(function () {
         getBustime();
-    }, 60000); */
-
-    var bgTimer = setTimeout(function () {
-        updateBg();
-    }, 6000);
-
+    }, 60000); 
+    
+    var bgTimer = setInterval(updateBg, 8000);
 
     updateDiningOptions();
     createClock();
-    //getBustime();
+    getBustime();
+    putOnWeather();
     updateBg();
 }
 
@@ -164,7 +164,6 @@ function updateDiningOptions(){
             function toMin(t) {
                 return t.hour*60 + t.min;
             }
-            console.log(json.locations)
 
             for (var index in json.locations) {
 
@@ -176,7 +175,7 @@ function updateDiningOptions(){
                     }
                 }
                 if (opTime === null) {
-                    message = "Closed today";
+                    message = "Closed Today";
                     rank = 5;
                 } else {
                     var startDiff = timeDiff(time, opTime.start);
@@ -193,10 +192,10 @@ function updateDiningOptions(){
 
                     if (opTime.start.hour < opTime.end.hour) {
                         if (-60 <= startDiffMin && startDiffMin < 0) {
-                            message = "Opening in" + startDiffMin + "min"
+                            message = "Opening in" + Math.abs(startDiffMin) + "min"
                             rank = 1;
                         } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                            message = "Closing in" + endDiffMin + "min";
+                            message = "Closing in" + Math.abs(endDiffMin) + "min";
                             rank = 2;
                         } else if (startDiffMin < -60) {
                             message = "Opening at " + opTime.start.hour + ":" + formatMin(opTime.start.min);
@@ -205,15 +204,15 @@ function updateDiningOptions(){
                             message = "Closed"
                             rank = 4;
                         } else {
-                            message = "Opening";
+                            message = "Open";
                             rank = 0;
                         }
                     } else {
                         if (-60 <= startDiffMin && startDiffMin < 0) {
-                            message = "Opening in" + startDiffMin + "min"
+                            message = "Opening in" + Math.abs(startDiffMin) + "min"
                             rank = 1;
                         } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                            message = "Closing in" + endDiffMin + "min";
+                            message = "Closing in" + Math.abs(endDiffMin) + "min";
                             rank = 2;
                         } else if (endDiffMin > 0 && startDiffMin < -60) {
                             message = "Opening at" + opTime.start.hour + ":" + formatMin(opTime.start.min);
@@ -222,7 +221,7 @@ function updateDiningOptions(){
                             message = "Closed"
                             rank = 4;
                         } else {
-                            message = "Opening";
+                            message = "Open";
                             rank = 0;
                         }
                     }
@@ -250,9 +249,12 @@ function putOnDiningOption(diningInfo) {
     ul.setAttribute('class', 'diningOptions');
 
     container.appendChild(ul);
-    diningInfo.forEach(renderBusList);
+    diningInfo.sort(function(x, y) {
+        return x.rank - y.rank;
+    })
+    diningInfo.forEach(renderDiningList);
 
-    function renderBusList(ele, ind, arr) {
+    function renderDiningList(ele, ind, arr) {
         var li = document.createElement('li');
         li.setAttribute('class', 'rank'+ele.rank);
 
@@ -274,11 +276,12 @@ function putOnDiningOption(diningInfo) {
     /********************************************/
     /**********      Bus Services    ***********/
     /*******************************************/
-/*
-    function getBustime() {
+
+function getBustime() {
 
 	$.ajax({
-		url: 'http://truetime.portauthority.org/bustime/wireless/html/eta.jsp?route=---&direction=---&displaydirection=---&stop=---&id=4407',
+		url: 'http://cors-anywhere.herokuapp.com/truetime.portauthority.org/bustime/wireless/html/eta.jsp?route=---&direction=---&displaydirection=---&stop=---&id=4407',
+        type: 'GET',
 		success: function(text) {
 			var busRegex = /<b>#(.*)&nbsp;/g;
 			var busNumers = [];
@@ -290,7 +293,7 @@ function putOnDiningOption(diningInfo) {
 
 			var busTimeRegex = /<b>(DUE|.*MIN)<\/b>/g;
 			while (busStr = busTimeRegex.exec(text)) {
-				busTimes.push(busStr[1].replace("&nbsp;", ""))
+				busTimes.push(busStr[1].replace("&nbsp;", "").replace("DUE", "NOW"));
 			}
 
 			busInfo = [];
@@ -308,6 +311,12 @@ function putOnDiningOption(diningInfo) {
 function putOnBustime(busInfo) {
 
 	var container = document.getElementById('busContainer');
+
+
+    // Remove old dom elements
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 	var ul = document.createElement('ul');
 	ul.setAttribute('id', 'morewood');
 	ul.setAttribute('class', 'busStop');
@@ -315,7 +324,7 @@ function putOnBustime(busInfo) {
 	container.appendChild(ul);
 	busInfo.forEach(renderBusList);
 
-    if (busInfo.length() === 0) {
+    if (busInfo.length === 0) {
         var li = document.createElement('li');
         li.innerHTML = "No Available Buses";
         ul.appendChild(li);
@@ -337,75 +346,54 @@ function putOnBustime(busInfo) {
 
 }
 
-*/
+
    /********************************************/
     /*******        Background       ***********/
     /*******************************************/
 
-/*
 function updateBg() {
-    bgIndex = bgIndex + 1;
-
-    if (bgIndex > bgMax || bgIndex == bgMax) {
-        bgIndex = 0;
+    if (bgIndex < 0) {
+        bgIndex = bgIndex + 1;
+    } else {
+        bgIndex = bgIndex + 1;
+        if (bgIndex > bgMax || bgIndex == bgMax) {
+            bgIndex = 0;
+        }
+        $('.background').fadeOut(600, function() {
+            $('.background').attr('src', 'images/background/'+ bgIndex +'.gif');
+            $('.background').fadeIn(600);
+        });
     }
+    
+} 
 
-    $('#background').fadeOut(400, function() {
-        $('#background').attr('src', 'images/background/'+bgIndex+'.gif');
-    }).fadeIn(400);
-
-}
-
-*/
 
    /********************************************/
     /**********        Weather       ***********/
     /*******************************************/
 
 
-function getHilo() {
-    $(document).ready(function() {
-        $.simpleWeather({
-            location: 'Pittsburgh, PA',
-            woeid: '',
-            unit: 'f',
-            success: function(weather) {
-                html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
-                html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
-                html += '<li class="currently">'+weather.currently+'</li>';
-                html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
-                $("#weather").html(html);
-                var hilo = [weather.high, weather.low];
-                getCur(hilo);
-            },
-            error: function(error) {
-                $("#weather").html('<p>'+error+'</p>');
-            }
-        })
-    })
-}
 
-function getCur(hilo) {
-    $.ajax({
-        url: "http://api.wunderground.com/api/1205bbca123028ac/conditions/q/PA/Pittsburgh.json",
-        success: function(data) {
-            var cur = [data.current_observation.weather, data.current_observation.temp_f];
-            getDaily(hilo, cur);
-        }
-    })
-}
 
-function getDaily(hilo, cur) {
+
+
+function putOnWeather() {
     $.ajax({
         url: "http://api.wunderground.com/api/1205bbca123028ac/forecast/q/PA/Pittsburgh.json",
         success: function(data) {
             //Each list represents a day. Each sublist represents weather code, hi, lo, and cur temp(for today).
-            var lst = [[cur[0], hilo[0], hilo[1], cur[1]]];
+            var lst = []
             for (var i = 1; i < 4; i++) {
-                var x = data.forecast.simpleforecast.forecastday[i];
-                lst.push([x.conditions, x.high.fahrenheit, x.low.fahrenheit]);
+                var x = data.forecast.simpleforecast.forecastday[i]
+                lst.push({
+                    weekday: x.date.weekday_short,
+                    weather: x.conditions, 
+                    hi: x.high.fahrenheit, 
+                    lo: x.low.fahrenheit, 
+                    iconURL: x.icon_url
+                })
             }
-            getHourly(lst);
+            return getHourly(lst)
         }
     })
 }
@@ -416,19 +404,88 @@ function getHourly(lst) {
         success: function(data) {
             //Each list represents an hour. Each sublist represents weather code, temp.
             var hLst = []
-            for (var i = data.hourly_forecast[0].FCTTIME.hour; i < 24; i++) {
-                hLst.push([data.hourly_forecast[i].condition]);
-            }
-            finish(lst, hLst);
+            for (var i = 0; i < 24; i++) {
+                var x = data.hourly_forecast[i];
+                hLst.push({
+                    weather: x.condition,
+                    temp: x.temp.english,
+                    hour: x.FCTTIME.hour,
+                    iconURL: x.icon_url
+                })
+                
+           }
+           return updatingWeather(lst, hLst)
         }
     })
 }
 
-function finish(lst, hLst) {
-    return (lst, hLst);
+days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
+
+function getDay() {
+    return 6;
 }
 
-getHilo();
+function updatingWeather(lst, hLst) {
+    var dailyContainer = document.getElementById('dailyContainer');
+    var ulDaily = document.createElement('ul');
+
+    dailyContainer.appendChild(ulDaily);
+    lst.forEach(renderDailyList);
+
+    function renderDailyList(ele, ind, arr) {
+
+        var li = document.createElement('li');
+        var weekday = document.createElement('div');
+        weekday.innerHTML = ele.weekday;
+
+        // var weather = document.createElement('div');
+        // weather.innerHTML = ele.weather;
+
+        var lo = document.createElement('div');
+        lo.innerHTML = ele.lo;
+
+        var hi = document.createElement('div');
+        hi.innerHTML = ele.hi;
+
+        var icon = document.createElement( 'img' );
+        icon.setAttribute('src', ele.iconURL);
+
+        li.appendChild(weekday);
+        // li.appendChild(weather);
+        li.appendChild(lo);
+        li.appendChild(hi);
+        li.appendChild(icon);
+        ulDaily.appendChild(li);
+    }
+
+    var hourlyContainer = document.getElementById('hourlyContainer');
+    var ulHourly = document.createElement('ul');
+    hourlyContainer.appendChild(ulHourly);
+    hLst.forEach(renderHourlyList);
+
+    function renderHourlyList(ele, ind, arr) {
+        var li = document.createElement('li');
+
+        var hour = document.createElement('div');
+        hour.innerHTML = ele.hour + ":00";
+
+        // var weather = document.createElement('div');
+        // weather.innerHTML = ele.weather;
+
+        var temp = document.createElement('div');
+        temp.innerHTML = ele.temp;
+
+        var icon = document.createElement('img');
+        icon.setAttribute('src', ele.iconURL);
+
+        li.appendChild(hour);
+        // li.appendChild(weather);
+        li.appendChild(temp);
+        li.appendChild(icon);
+
+        ulHourly.appendChild(li);
+    }
+}
 
 
 

@@ -67,6 +67,7 @@ textarea {
     font-size: 110px;   
 }
 
+
 #date {
     font-family: Avenir, Geneva, sans-serif;
     font-size: 40px;
@@ -74,14 +75,14 @@ textarea {
 
 
 
-#background {
- position: absolute;
- z-index: -1000;
- max-width: 100%;
-    
+.background {
+    position: absolute;
+    z-index: -1000;
+    max-width: 100%;
 }
 
 body {
+    background-color: black;
     overflow: hidden;
     background-repeat: no-repeat;
     background-position: right top;
