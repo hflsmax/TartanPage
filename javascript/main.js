@@ -86,8 +86,10 @@ function updateClock() {
         }
     }
 
-    function createClock() {
+    function updateClock() {
         newDate = new Date();
+
+        curSec = newDate.getSeconds();
         curMin = newDate.getMinutes();
         curHour = newDate.getHours();
         month = newDate.getMonth();
@@ -95,29 +97,29 @@ function updateClock() {
         year = newDate.getFullYear();
 
 
-        $('#time').text(doubleDigit(curHour) + ":" + doubleDigit(curMin));
+        $('#time').text(doubleDigit(curHour) + ":" + doubleDigit(curMin) + ":" + doubleDigit(curSec));
         $('#date').text(months[month] + " " + curDay + ithsX(curDay) + ", " + year);
 
     }
-    var timer = setTimeout(function () {
-        createClock();
+    var timer = setInterval(function () {
+        updateClock();
     }, 1000);
 
-    var diningTimer = setTimeout(function () {
+    var diningTimer = setInterval(function () {
         updateDiningOptions();
     }, 60000);
 
     updateDiningOptions();
 
     
-    var busTimer = setTimeout(function () {
+    var busTimer = setInterval(function () {
         getBustime();
     }, 60000); 
     
     var bgTimer = setInterval(updateBg, 8000);
 
     updateDiningOptions();
-    createClock();
+    updateClock();
     getBustime();
     putOnWeather();
     updateBg();
