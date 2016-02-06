@@ -93,13 +93,15 @@ function updateClock() {
         
         $('#time').text(doubleDigit(curHour) + ":" + doubleDigit(curMin));
         $('#date').text(months[month] + " " + curDay + ithsX(curDay) + ", " + year);
-        
-        updateDiningOptions();
-        
-        var timer = setTimeout(function () {
-            createClock();
-        }, 500); 
+
     } 
+    var timer = setTimeout(function () {
+        createClock();
+    }, 1000); 
+
+    var diningTimer = setTimeout(function () {
+        updateDiningOptions();
+    }, 60000);
     
     createClock();
 }
@@ -121,7 +123,7 @@ return 1;
 
 function getTime() {
     return {
-        hour: 1,
+        hour: 10,
         min: 55
     }
 }
@@ -151,60 +153,68 @@ function updateDiningOptions(){
             for (var index in json.locations) {
 
                 var place = json.locations[index];
-                var opTime = place.times[day-1];
-                var startDiff = timeDiff(time, opTime.start);
-                var endDiff = timeDiff(time, opTime.end);
-                var startDiffMin = toMin(startDiff);
-                var endDiffMin = toMin(endDiff);
-
-                function formatMin(x) {
-                    if (x == 0) return "00";
-                        else return ""+x;
-                }
-
-                var message, rank;
-
-                if (opTime.start.hour < opTime.end.hour) {
-                    if (-60 <= startDiffMin && startDiffMin < 0) {
-                        message = "Opening in" + startDiffMin + "min"
-                        rank = 1;
-                    } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                        message = "Closing in" + endDiffMin + "min";
-                        rank = 2;
-                    } else if (startDiffMin < -60) {
-                        message = "Opening at " + opTime.start.hour + ":" + formatMin(opTime.start.min);
-                        rank = 3;
-                    } else if (endDiffMin >= 0 || startDiffMin < 0) {
-                        message = "Closed"
-                        rank = 4;
-                    } else {
-                        message = "Opening";
-                        rank = 0;
+                var opTime = null;
+                for (var index in place.times) {
+                    if (place.times[index].start.day == day) {
+                        opTime = place.times[index];
                     }
+                }
+                if (opTime === null) {
+                    message = "Closed today";
+                    rank = 5;
                 } else {
-                    if (-60 <= startDiffMin && startDiffMin < 0) {
-                        message = "Opening in" + startDiffMin + "min"
-                        rank = 1;
-                    } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                        message = "Closing in" + endDiffMin + "min";
-                        rank = 2;
-                    } else if (endDiffMin > 0 && startDiffMin < -60) {
-                        message = "Opening at" + opTime.start.hour + ":" + formatMin(place.strat.min);
-                        rank = 3;
-                    } else if (endDiffMin > 0 && startDiffMin < 0) {
-                        message = "Closed"
-                        rank = 4;
+                    var startDiff = timeDiff(time, opTime.start);
+                    var endDiff = timeDiff(time, opTime.end);
+                    var startDiffMin = toMin(startDiff);
+                    var endDiffMin = toMin(endDiff);
+
+                    function formatMin(x) {
+                        if (x == 0) return "00";
+                            else return ""+x;
+                    }
+
+                    var message, rank;
+
+                    if (opTime.start.hour < opTime.end.hour) {
+                        if (-60 <= startDiffMin && startDiffMin < 0) {
+                            message = "Opening in" + startDiffMin + "min"
+                            rank = 1;
+                        } else if (-60 <= endDiffMin && endDiffMin < 0) {
+                            message = "Closing in" + endDiffMin + "min";
+                            rank = 2;
+                        } else if (startDiffMin < -60) {
+                            message = "Opening at " + opTime.start.hour + ":" + formatMin(opTime.start.min);
+                            rank = 3;
+                        } else if (endDiffMin >= 0 || startDiffMin < 0) {
+                            message = "Closed"
+                            rank = 4;
+                        } else {
+                            message = "Opening";
+                            rank = 0;
+                        }
                     } else {
-                        message = "Opening";
-                        rank = 0;
+                        if (-60 <= startDiffMin && startDiffMin < 0) {
+                            message = "Opening in" + startDiffMin + "min"
+                            rank = 1;
+                        } else if (-60 <= endDiffMin && endDiffMin < 0) {
+                            message = "Closing in" + endDiffMin + "min";
+                            rank = 2;
+                        } else if (endDiffMin > 0 && startDiffMin < -60) {
+                            message = "Opening at" + opTime.start.hour + ":" + formatMin(place.strat.min);
+                            rank = 3;
+                        } else if (endDiffMin > 0 && startDiffMin < 0) {
+                            message = "Closed"
+                            rank = 4;
+                        } else {
+                            message = "Opening";
+                            rank = 0;
+                        }
                     }
                 }
                 diningInfo.push({
                     name: place.name,
                     message: message,
-                    rank: rank,
-                    open: opTime.start,
-                    close: opTime.end
+                    rank: rank
                 })
 
             }
