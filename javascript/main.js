@@ -293,7 +293,7 @@ function getBustime() {
 
 			var busTimeRegex = /<b>(DUE|.*MIN)<\/b>/g;
 			while (busStr = busTimeRegex.exec(text)) {
-				busTimes.push(busStr[1].replace("&nbsp;", ""))
+				busTimes.push(busStr[1].replace("&nbsp;", "").replace("DUE", "NOW"));
 			}
 
 			busInfo = [];
