@@ -107,20 +107,20 @@ function updateClock() {
 
     updateDiningOptions();
 
-    /*
+    
     var busTimer = setTimeout(function () {
         getBustime();
-    }, 60000); */
+    }, 60000); 
 
-    var bgTimer = setTimeout(function () {
-        updateBg();
-    }, 6000);
+    // var bgTimer = setTimeout(function () {
+    //     updateBg();
+    // }, 6000);
 
 
     updateDiningOptions();
     createClock();
-    //getBustime();
-    updateBg();
+    getBustime();
+    // updateBg();
 }
 
 
@@ -193,10 +193,10 @@ function updateDiningOptions(){
 
                     if (opTime.start.hour < opTime.end.hour) {
                         if (-60 <= startDiffMin && startDiffMin < 0) {
-                            message = "Opening in" + startDiffMin + "min"
+                            message = "Opening in" + abs(startDiffMin) + "min"
                             rank = 1;
                         } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                            message = "Closing in" + endDiffMin + "min";
+                            message = "Closing in" + abs(endDiffMin) + "min";
                             rank = 2;
                         } else if (startDiffMin < -60) {
                             message = "Opening at " + opTime.start.hour + ":" + formatMin(opTime.start.min);
@@ -210,10 +210,10 @@ function updateDiningOptions(){
                         }
                     } else {
                         if (-60 <= startDiffMin && startDiffMin < 0) {
-                            message = "Opening in" + startDiffMin + "min"
+                            message = "Opening in" + abs(startDiffMin) + "min"
                             rank = 1;
                         } else if (-60 <= endDiffMin && endDiffMin < 0) {
-                            message = "Closing in" + endDiffMin + "min";
+                            message = "Closing in" + abs(endDiffMin) + "min";
                             rank = 2;
                         } else if (endDiffMin > 0 && startDiffMin < -60) {
                             message = "Opening at" + opTime.start.hour + ":" + formatMin(opTime.start.min);
@@ -274,11 +274,13 @@ function putOnDiningOption(diningInfo) {
     /********************************************/
     /**********      Bus Services    ***********/
     /*******************************************/
-/*
+
     function getBustime() {
 
 	$.ajax({
 		url: 'http://truetime.portauthority.org/bustime/wireless/html/eta.jsp?route=---&direction=---&displaydirection=---&stop=---&id=4407',
+        type: 'GET',
+        dataType: 'jsonp',
 		success: function(text) {
 			var busRegex = /<b>#(.*)&nbsp;/g;
 			var busNumers = [];
@@ -337,7 +339,7 @@ function putOnBustime(busInfo) {
 
 }
 
-*/
+
    /********************************************/
     /*******        Background       ***********/
     /*******************************************/
