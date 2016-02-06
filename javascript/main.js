@@ -43,7 +43,7 @@ function main() {
         $('#time').text(doubleDigit(curHour) + ":" + doubleDigit(curMin));
         $('#date').text(months[month-1] + " " + curDay + ithsX(curDay) + ", " + year);
         
-        getDining();
+        updateDiningOptions();
         
         var timer = setTimeout(function () {
             createClock();
@@ -107,7 +107,7 @@ function main() {
         }
     }
 
-    function getDining(){
+    function updateDiningOptions(){
         var diningInfo = [];
         $.ajax({
             url: 'http://apis.scottylabs.org/dining/v1/locations',
@@ -196,6 +196,10 @@ function main() {
 
     function putOnDiningOption(diningInfo) {
         var container = document.getElementById('diningContainer');
+        // Remove old dom elements
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
         var ul = document.createElement('ul');
         ul.setAttribute('class', 'diningOptions');
 
