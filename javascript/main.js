@@ -508,7 +508,7 @@ function updatingWeather(lst, hLst) {
     currenttemp.innerHTML = hLst[0].temp;
     currenttemp.setAttribute('style', 'margin-left: 150px; \
                             font-Family :Avenir, Geneva, sans-serif;\
-                            margin-top: -35px')
+                            margin-top: -25px; ')
     currenttemp.style.fontSize = '400%';
     currenttemp.style.color = "white";
     var weatherBigIcon = document.getElementById('weathericon');
@@ -518,7 +518,7 @@ function updatingWeather(lst, hLst) {
     var bigImg = document.createElement('img');
     bigImg.setAttribute('width', '70px');
     bigImg.setAttribute('style', 'margin-left: 50px;\
-                                    margin-top: -35px');
+                                    margin-top: -25px');
 
     if (getTime.hour > 19) {
         bigImg.setAttribute("src", "./weathericonswhite/nighttime.svg");
