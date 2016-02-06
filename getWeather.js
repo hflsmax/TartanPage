@@ -40,7 +40,7 @@ function main() {
                 var lst = [[cur[0], hilo[0], hilo[1], cur[1]]]
                 for (var i = 1; i < 4; i++) {
                     var x = data.forecast.simpleforecast.forecastday[i]
-                    lst.push([x.conditions, x.high, x.low])
+                    lst.push([x.conditions, x.high.fahrenheit, x.low.fahrenheit])
                 }
                 getHourly(lst)
             }
@@ -54,7 +54,7 @@ function main() {
                 //Each list represents an hour. Each sublist represents weather code, temp.
                 var hLst = []
                 for (var i = data.hourly_forecast[0].FCTTIME.hour; i < 24; i++) {
-                    hLst.push([data.hourly_forecast[0].condition])
+                    hLst.push([data.hourly_forecast[i].condition])
                 }
                 finish(lst, hLst)
             }
@@ -62,9 +62,7 @@ function main() {
     }
 
     function finish(lst, hLst) {
-        console.log(lst)
-        console.log(hLst)
-        return lst, hLst
+        return (lst, hLst)
     }
 
     getHilo()
