@@ -45,7 +45,7 @@ function main() {
         
         getDining();
         
-        timer = setTimeout(function () {
+        var timer = setTimeout(function () {
             createClock();
         }, 500); 
     } 
@@ -108,12 +108,12 @@ function main() {
     }
 
     function getDining(){
-        diningInfo = [];
+        var diningInfo = [];
         $.ajax({
             url: 'http://apis.scottylabs.org/dining/v1/locations',
             success: function(json) {
-                day = getDay();
-                time = getTime();
+                var day = getDay();
+                var time = getTime();
                 function timeDiff(t1, t2) {
                     var time = {
                         hour: t1.hour - t2.hour,
@@ -129,20 +129,21 @@ function main() {
                     return t.hour*60 + t.min;
                 }
 
-                for (index in json.locations) {
+                for (var index in json.locations) {
 
-                    place = json.locations[index];
-                    opTime = place.times[day-1];
-                    startDiff = timeDiff(time, opTime.start);
-                    endDiff = timeDiff(time, opTime.end);
-                    startDiffMin = toMin(startDiff);
-                    endDiffMin = toMin(endDiff);
-
+                    var place = json.locations[index];
+                    var opTime = place.times[day-1];
+                    var startDiff = timeDiff(time, opTime.start);
+                    var endDiff = timeDiff(time, opTime.end);
+                    var startDiffMin = toMin(startDiff);
+                    var endDiffMin = toMin(endDiff);
 
                     function formatMin(x) {
                         if (x == 0) return "00";
                             else return ""+x;
                     }
+
+                    var message, rank;
 
                     if (opTime.start.hour < opTime.end.hour) {
                         if (-60 <= startDiffMin && startDiffMin < 0) {
