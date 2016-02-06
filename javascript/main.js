@@ -202,7 +202,7 @@ function updateDiningOptions(){
                             message = "Closed"
                             rank = 4;
                         } else {
-                            message = "Opened";
+                            message = "Open";
                             rank = 0;
                         }
                     } else {
@@ -219,7 +219,7 @@ function updateDiningOptions(){
                             message = "Closed"
                             rank = 4;
                         } else {
-                            message = "Opening";
+                            message = "Open";
                             rank = 0;
                         }
                     }
@@ -247,9 +247,12 @@ function putOnDiningOption(diningInfo) {
     ul.setAttribute('class', 'diningOptions');
 
     container.appendChild(ul);
-    diningInfo.forEach(renderBusList);
+    diningInfo.sort(function(x, y) {
+        return x.rank - y.rank;
+    })
+    diningInfo.forEach(renderDiningList);
 
-    function renderBusList(ele, ind, arr) {
+    function renderDiningList(ele, ind, arr) {
         var li = document.createElement('li');
         li.setAttribute('class', 'rank'+ele.rank);
 
@@ -407,7 +410,6 @@ function getHourly(lst) {
                     hour: x.FCTTIME.hour,
                     iconURL: x.icon_url
                 })
-                console.log(hLst)
                 
            }
            return updatingWeather(lst, hLst)
