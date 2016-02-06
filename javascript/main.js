@@ -3,6 +3,22 @@
 var newDate, curMin, curHour, month, curDay, year;
 var bgIndex = -1;
 var bgMax = 4;
+var funFact = "Carnegie Mellon's original campus architect is said to have modeled his design after a ship. The prow of the historic USS Pennsylvania rests atop Roberts Hall, which overlooks Panther Hollow and the Carnegie Museum complex. \n\
+In December 1955, professor Herbert Simon and business Ph.D. student Allen Newell made a breakthrough that would place them among the founders of artificial intelligence — inventing a programming language for computers to model complex human problem-solving processes.\n\
+The flat grassy area in the middle of campus known as \"the Cut\" was originally a huge ravine, deeper than the tennis courts area. Over the years, it was filled in with dirt removed when the school cut down a 43-foot hill for the College of Fine Arts building and a 56-foot hill to provide access to Forbes Avenue at Morewood. \n\
+Drama majors, or \"dramats,\" signed their names on the walls of the Green Room behind the main stage of Carnegie Mellon's Kresge Theatre. Among these young hopefuls: Ted Danson, Blair Underwood, Laura San Giacomo, Judith Light and Steven Bochco. \n\
+Carnegie Mellon's Tepper School of Business is home to the \"Management Game,\" an exercise in teamwork and group dynamics, that was modeled after Procter & Gamble and the soap industry. Created here in the 1950s, it was the first simulation program of its kind offered at a business school. Today, it is widely copied by other top business schools. \n\
+In the early 1980s, researchers at Carnegie Mellon's Field Robotics Center created robotic machines that cleaned up nuclear waste at Three Mile Island. Years later, other prototypes were used in the Chernobyl accident clean-up in Ukraine. \n\
+Carnegie Mellon’s popularity spills over to the silver and small screens. The university has been endorsed by characters on \"Buffy the Vampire Slayer\" and \"The West Wing,\" spoofed by \"The Muppets\" (Dr. Bunsen Honeydew went to Carnegie Melonhead University), and scenes from the movies \"Smart People,\" \"The Mothman Prophecies,\" \"Wonder Boys,\" \"Dogma,\" and \"Flashdance\" were filmed on campus.\n\
+\"The Fence\" was erected in 1923 so seniors could sit and watch the world go by. Three administrations were unable to remove it. Today, it is a passionately guarded billboard for both sanctioned and unsanctioned announcements, as well as editorial comments on campus life.\n\
+In the early 1940s, the silicone rubber in Silly Putty was discovered by a Dow Corning employee working on a research fellowship at Mellon Institute. Earl Warrick was working with silicone compounds and came up with the strange, pliable material that stretches, bounces and absorbs printed impressions.\n\
+\"Buggy\" began in 1920 as the \"Sweepstakes Race\" and highlights the Spring Carnival each year. Drivers squeeze themselves into the student-designed vehicles and steer as they're pushed over a mile-long course by competing teams from fraternities, sororities and other student organizations.\n\
+Carnegie Mellon worked with IBM in the 1980s to develop Andrew — a pioneering computer network that links the entire campus through thousands of personal computers and work stations. In 2000, Carnegie Mellon continued its technical tradition with a campus-wide wireless network. Today, Carnegie Mellon consistently ranks as one of the \"most wired\" campuses in America.\n\
+School of Computer Science research professor Scott Fahlman has long been credited for introducing emoticons (also called smileys) while posting to an online bulletin board in 1981. An emoticon is a series of ordinary printable characters, such as :-) , ;o) or :-(, intended to represent a human facial expression and convey an emotion.\n\
+During World War I, 16 temporary buildings were built on the then Carnegie Institute of Technology campus to serve as barracks, training facilities and mess halls for soldiers in training for technical, engineering and mechanical war work.   By 1918, 8,000 soldiers and sailors were living on campus.\n\
+In 2002, Universal Pictures released \"A Beautiful Mind,\" an Academy award-winning film directed by Ron Howard about Carnegie Mellon alumnus John Nash Jr. and his 30-year battle with schizophrenia. Nash earned his bachelor's and master's degrees in mathematics in 1948 and won the Nobel Prize in Economic Science in 1994.\n\
+In 1949, the only male member of Carnegie Institute of Technology's \"Modern Dance Club\" was a young man named Andrew Warhola. Decades later, Andy Warhol became known as a pop art icon.\n\
+"
 
 function main() {
     'use strict';
@@ -123,6 +139,7 @@ function updateClock() {
     getBustime();
     putOnWeather();
     updateBg();
+    showFunFact();
 }
 
 
@@ -131,6 +148,11 @@ function updateClock() {
     /********************************************/
     /**********    Dining Services   ***********/
     /*******************************************/
+
+function showFunFact() {
+    var listOfFunFact = funFact.split(/\n/);
+    document.getElementById("funfact").innerHTML = listOfFunFact[Math.round(Math.random()*listOfFunFact.length)]
+}
 
 
 
@@ -390,8 +412,8 @@ function putOnWeather() {
                 lst.push({
                     weekday: x.date.weekday_short,
                     weather: x.conditions, 
-                    hi: x.high.fahrenheit, 
-                    lo: x.low.fahrenheit, 
+                    hi: x.high.fahrenheit + "F", 
+                    lo: x.low.fahrenheit + "F", 
                     iconURL: x.icon_url
                 })
             }
@@ -410,7 +432,7 @@ function getHourly(lst) {
                 var x = data.hourly_forecast[i];
                 hLst.push({
                     weather: x.condition,
-                    temp: x.temp.english,
+                    temp: x.temp.english + "F",
                     hour: x.FCTTIME.hour,
                     iconURL: x.icon_url
                 })
@@ -421,13 +443,79 @@ function getHourly(lst) {
     })
 }
 
-days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
 
-function getDay() {
-    return 6;
-}
+var weatherIconPair =
+[["Drizzle", "rain"],
+["Rain", "rain"],
+["Snow", "snow"],
+["SnowGrains", "snow"],
+["IceCrystals", "snow"],
+["IcePellets", "snow"],
+["Hail", "snow"],
+["Mist", "rain"],
+["Fog", "cloudy"],
+["FogPatches", "cloudy"],
+["Smoke", "cloudy"],
+["VolcanicAsh", "cloudy"],
+["WidespreadDust", "cloudy"],
+["Sand", "cloudy"],
+["Haze", "cloudy"],
+["Spray", "rain"],
+["DustWhirls", "cloudy"],
+["Sandstorm", "cloudy"],
+["LowDriftingSnow", "snow"],
+["LowDriftingWidespreadDust", "cloudy"],
+["LowDriftingSand", "cloudy"],
+["BlowingSnow", "snow"],
+["BlowingWidespreadDust", "cloudy"],
+["BlowingSand", "cloudy"],
+["RainMist", "rain"],
+["RainShowers", "rain"],
+["SnowShowers", "snow"],
+["SnowBlowingSnowMist", "snow"],
+["IcePelletShowers", "snow"],
+["HailShowers", "rain"],
+["SmallHailShowers", "rain"],
+["Thunderstorm", "rain"],
+["ThunderstormsandRain", "rain"],
+["ThunderstormsandSnow", "snow"],
+["ThunderstormsandIcePellets", "rain"],
+["ThunderstormswithHail", "rain"],
+["ThunderstormswithSmallHail", "rain"],
+["FreezingDrizzle", "rain"],
+["FreezingRain", "rain"],
+["FreezingFog", "cloudy"],
+["PatchesofFog", "cloudy"],
+["ShallowFog", "cloudy"],
+["PartialFog", "cloudy"],
+["Overcast", "sunnycloudy"],
+["Clear", "sunnydaytime"],
+["PartlyCloudy", "cloudy"],
+["MostlyCloudy", "cloudy"],
+["ScatteredClouds", "sunnycloudy"],
+["SmallHail", "rain"],
+["Squalls", "cloudy"],
+["FunnelCloud", "cloudy"]]
+
 
 function updatingWeather(lst, hLst) {
+    var weatherBigIcon = document.getElementById('weathericon');
+    var bigImg = document.createElement('img');
+
+    if (getTime.hour > 19) {
+        bigImg.setAttribute("src", "./weathericonswhite/nighttime.svg");
+    } else {
+        for (var i = 0; i < weatherIconPair.length; i++) {
+            if (lst[0].weather.indexOf(weatherIconPair[i][0]) != -1) {
+                var iconPair = weatherIconPair[i];
+                break;
+            }
+        }
+        bigImg.setAttribute("src", "./weathericonswhite/"+iconPair[1]+".svg");
+    }
+    weatherBigIcon.appendChild(bigImg);
+
+
     var dailyContainer = document.getElementById('dailyContainer');
     var ulDaily = document.createElement('ul');
 
