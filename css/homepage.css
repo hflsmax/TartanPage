@@ -133,7 +133,7 @@ h1 {
 }
 
 ul {
-    padding-top: 6.5%;
+    padding-top: 4%;
     float: right;
     display: inline-block;
     width: 30%;
@@ -196,7 +196,6 @@ svg {
 
 div.useblock {
     display: inline-block;
-    
     background: #ccc;
     margin-top: 1%;
     margin-right: 25px;
@@ -208,6 +207,8 @@ div.useblock {
 }
 
 
+=======
+>>>>>>> ac9af9c9db273f931709e591ab6ef5f14edf6952
 div.useblock p{
 /*    padding-top: 5%;*/
     padding-bottom: 5%;
@@ -228,20 +229,13 @@ div.useblock p{
    top: 15%;
 /*    position: absolute;*/=
     margin-top: 1%;
-
     left: 14%;
-    height: 39%;
+    height: 30%;
     width: 21%;
     text-align: center;
     position: absolute;
-    
-     
-
-    
 /*    margin-top: 1%;*/
-    margin-right: 35px;
     text-align: center;
-    width: 27%;
     padding-bottom: 1%;
 }
 
@@ -269,8 +263,6 @@ div.useblock p{
     top: 35.7%;
     left: 23.5%;
 }
-
-
 
 .place {
     position: absolute;
@@ -303,11 +295,11 @@ div.useblock p{
 }
 
 #busContainer {
-    margin-top: 1%;
+    margin-top: 2.5%;
     position: absolute;
     height:70%;
     width: 21%;
-    color: black;
+    color: white;
     overflow: scroll;
     display: inline;
     left: 14.8%;
