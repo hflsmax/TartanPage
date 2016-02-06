@@ -143,7 +143,7 @@ function updateClock() {
     getBustime();
     putOnWeather();
     updateBg();
-    showFunFact();
+
 }
 
 
