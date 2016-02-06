@@ -8,10 +8,12 @@ function main() {
     'use strict';
 
     var userName = localStorage.getItem("userName");
+    
     if (userName !== null) {
         $('#startPage').hide();
         $('#userName').text(userName + "!");
     }
+
 
     $('textarea').bind("enterKey",function(e){
         userName = $('textarea').val();
