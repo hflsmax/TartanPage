@@ -50,10 +50,10 @@ textarea {
     font-family: Verdana, Geneva, sans-serif;
     font-style: bold; 
     text-shadow:
-    -2px -2px 0 #666,
-    2px -2px 0 #666,
-    -2px 2px 0 #666,
-    2px 2px 0 #666;
+    -2px -2px 0 #999,
+    2px -2px 0 #999,
+    -2px 2px 0 #999,
+    2px 2px 0 #999;
 }
 
 #time {
@@ -68,6 +68,7 @@ textarea {
 }
 
 body {
+    overflow: hidden;
     background-repeat: no-repeat;
     background-position: right top;
     background-attachment: fixed;
@@ -177,5 +178,6 @@ div.useblock p{
     height: 40%;
     width: 21.5%;
     color: black;
+    overflow: scroll;
 
 }
