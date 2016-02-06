@@ -279,6 +279,29 @@ div.useblock p{
     
 }
 
+#busContainer {
+    margin-top: 1%;
+    position: absolute;
+    height: 39%;
+    width: 21%;
+    color: black;
+    overflow: scroll;
+    display: inline;
+    left: 14.1%;
+    font-size: 13px;
+    line-height: 19px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+.bus {
+    position: absolute;
+    left: 5%;
+}
+
+.time {
+}
+
+
 #wTop {
     position: absolute;
     height: 23%;
@@ -329,5 +352,7 @@ div.useblock p{
     text-align: center;
 
 }
+
+
 
 
