@@ -109,7 +109,7 @@ h1 {
 #intro {
    position: absolute;
    padding-left: 5%;
-   padding-top: 7%;
+   padding-top: 4.25%;
 /*
    text-shadow:
     -1px -1px 0 #666,
@@ -125,7 +125,7 @@ h1 {
 }
 
 ul {
-    padding-top: 6.5%;
+    padding-top: 4%;
     float: right;
     display: inline-block;
     width: 30%;
@@ -219,7 +219,7 @@ div.useblock p{
 }
 
 #diningContainer {
-    margin-top: 3%;
+    margin-top: 3.5%;
     position: absolute;
     height: 60%;
     width: 21.5%;
@@ -242,9 +242,6 @@ div.useblock p{
     left: 23.5%;
 }
 
-#restaurant{
-}
-
 .place {
     position: absolute;
     left: 5%;
@@ -261,24 +258,25 @@ div.useblock p{
 
 #bus {
     width: 60px;
-    margin-top: -100px;
+    top: 14%;
     fill: #eee;
     text-align: center;
 }
 
 #restaurant {
-    width: 35px;
-    margin-top: -120px;
+    width: 37px;
+    top: 14%;
     fill: #eee;
+    text-align: center;
     
 }
 
 #busContainer {
-    margin-top: 1%;
+    margin-top: 2.5%;
     position: absolute;
-    height:70%;
+    height:60%;
     width: 21%;
-    color: black;
+    color: white;
     overflow: scroll;
     display: inline;
     left: 14.8%;
