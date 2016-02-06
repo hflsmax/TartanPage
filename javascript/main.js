@@ -24,10 +24,14 @@ function main() {
     'use strict';
 
     var userName = localStorage.getItem("userName");
+    var greeting = ["Greetings, ", "How are you, ", "Welcome, ", 
+                    "Heart in the work? ", "Change the world, "];
+    var greetIndex = Math.floor((Math.random() * 10) + 1) % 5;
     
     if (userName !== null) {
         $('#startPage').hide();
         $('#userName').text(userName + "!");
+        $('#hello').text(greeting[greetIndex]);
     }
 
 
@@ -132,7 +136,7 @@ function updateClock() {
         getBustime();
     }, 60000); 
     
-    var bgTimer = setInterval(updateBg, 8000);
+    var bgTimer = setInterval(updateBg, 12000);
 
     updateDiningOptions();
     updateClock();
@@ -551,14 +555,16 @@ function updatingWeather(lst, hLst) {
         var hi = document.createElement('div');
         hi.innerHTML = ele.hi;
 
+        var iconCont = document.createElement('div');
         var icon = document.createElement( 'img' );
         icon.setAttribute('src', ele.iconURL);
+        iconCont.appendChild(icon);
 
         li.appendChild(weekday);
         // li.appendChild(weather);
         li.appendChild(lo);
         li.appendChild(hi);
-        li.appendChild(icon);
+        li.appendChild(iconCont);
         ulDaily.appendChild(li);
     }
 
