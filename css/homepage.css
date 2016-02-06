@@ -123,7 +123,7 @@ ul {
     display: inline-block;
     width: 30%;
     padding: 1%;
-    margin-top: 7.5%;
+    margin-top: 6.5%;
     margin-right: -3.5%;
     
 }
@@ -236,7 +236,7 @@ div.useblock p{
     width: 21.5%;
     overflow: scroll;
     display: inline;
-    left: 38.4%;
+    left: 39.55%;
     font-size: 13px;
     line-height: 19px;
 /*    margin-top: 1%;*/
@@ -271,9 +271,9 @@ div.useblock p{
 
 #bus {
     width: 60px;
-    top: 7%;
+    top: 6.5%;
     fill: #eee;
-    text-align: center;
+    left: 25%
 }
 
 #restaurant {
@@ -294,7 +294,7 @@ div.useblock p{
     color: white;
     overflow: scroll;
     display: inline;
-    left: 14.8%;
+    left: 16.2%;
     font-size: 13px;
     line-height: 19px;
     font-family: Verdana, Geneva, sans-serif;
@@ -310,12 +310,12 @@ div.useblock p{
 
 #weathericon {
     position: absolute;
-    width: 100px;
+
 }
 
 #currenttemp {
-    position: absolute;
-    width: 100px;
+    position: absolute;  
+    
 }
 
 #wTop {
@@ -336,7 +336,7 @@ div.useblock p{
 }    
 
 #wTop img{
-
+  
     margin-top: 5%;
     height: 20px;
     width: 20px;
@@ -373,9 +373,11 @@ div.useblock p{
     position: absolute;
     height: 150px;
     overflow: scroll;
-    margin: 10% 15% 0% 15%;
-    border: 1px solid white;
+    margin: 10% 15% 0% 7%;
+    padding-left: -7%;
+/*    border: 1px solid white;*/
     max-width: 80%;
+    border-bottom: 1px solid white;
 
     
 }
