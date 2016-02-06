@@ -6,11 +6,13 @@
         <link rel="stylesheet" type="text/css" href="./css/homepage.css">
         <script src="javascript/jquery-2.2.0.js"></script>
         <script src="javascript/main.js"></script>
+        <script src="javascript/jquery.simpleWeather.js"></script>
     </head>
     
     <img id = "background"src="images/Carnegie_Mellon_University_red_leaves_in_the_fall_2.gif">  </img>
-    
-     <div class="notSaved" id="startPage">
+    <div id = "CMU">Carnegie Mellon University</div>
+
+    <div class="notSaved" id="startPage">
         <div id="openingText">
             <p id= "hi">Hi</p><textarea wrap="soft" rows="1"  placeholder="Your Name"></textarea>
         </div>
@@ -43,6 +45,8 @@
                     <div class="entire">
                         <div class="useblock">
                             <p>Bus Services</p>
+                            <div id="busContainer">
+                            </div>
                         
                         </div>
                         <div class="useblock">
@@ -52,6 +56,15 @@
                         </div>
                         <div class="useblock">
                             <p>Weather</p>
+                            <div id="wTop">
+                                <div id="wCond">Sunny As SHT</div>
+                                <img id="wCondPic" src="images/sun.png" ></img>
+                                <div id="wHi">Hi 96°</div>
+                                <div id="wLo">Lo 32°</div>
+                                <div id="wTemp">76°</div>
+                            </div>
+                            
+                            
                         </div>
 
 
