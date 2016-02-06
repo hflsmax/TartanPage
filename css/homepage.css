@@ -316,6 +316,15 @@ div.useblock p{
 .time {
 }
 
+#weathericon {
+    position: absolute;
+    width: 100px;
+}
+
+#currenttemp {
+    position: absolute;
+    width: 100px;
+}
 
 #wTop {
     position: absolute;

@@ -412,8 +412,8 @@ function putOnWeather() {
                 lst.push({
                     weekday: x.date.weekday_short,
                     weather: x.conditions, 
-                    hi: x.high.fahrenheit + "F", 
-                    lo: x.low.fahrenheit + "F", 
+                    hi: x.high.fahrenheit + "°F", 
+                    lo: x.low.fahrenheit + "°F", 
                     iconURL: x.icon_url
                 })
             }
@@ -432,7 +432,7 @@ function getHourly(lst) {
                 var x = data.hourly_forecast[i];
                 hLst.push({
                     weather: x.condition,
-                    temp: x.temp.english + "F",
+                    temp: x.temp.english + "°F",
                     hour: x.FCTTIME.hour,
                     iconURL: x.icon_url
                 })
@@ -499,14 +499,28 @@ var weatherIconPair =
 
 
 function updatingWeather(lst, hLst) {
+
+    var currenttemp = document.getElementById('currenttemp');
+    currenttemp.innerHTML = hLst[0].temp;
+    currenttemp.setAttribute('style', 'margin-left: 150px; \
+                            font-Family :Avenir, Geneva, sans-serif;\
+                            margin-top: -35px')
+    currenttemp.style.fontSize = '400%';
+    currenttemp.style.color = "white";
     var weatherBigIcon = document.getElementById('weathericon');
+    
+
+
     var bigImg = document.createElement('img');
+    bigImg.setAttribute('width', '70px');
+    bigImg.setAttribute('style', 'margin-left: 50px;\
+                                    margin-top: -35px');
 
     if (getTime.hour > 19) {
         bigImg.setAttribute("src", "./weathericonswhite/nighttime.svg");
     } else {
         for (var i = 0; i < weatherIconPair.length; i++) {
-            if (lst[0].weather.indexOf(weatherIconPair[i][0]) != -1) {
+            if ((hLst[0].weather.replace(" ", "")).indexOf(weatherIconPair[i][0]) != -1) {
                 var iconPair = weatherIconPair[i];
                 break;
             }
