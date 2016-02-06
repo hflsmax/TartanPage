@@ -173,7 +173,7 @@ function updateDiningOptions(){
                     }
                 }
                 if (opTime === null) {
-                    message = "Closed today";
+                    message = "Closed Today";
                     rank = 5;
                 } else {
                     var startDiff = timeDiff(time, opTime.start);
@@ -307,7 +307,7 @@ function putOnBustime(busInfo) {
 
 	var container = document.getElementById('busContainer');
 
-    
+
     // Remove old dom elements
     while (container.firstChild) {
         container.removeChild(container.firstChild);
