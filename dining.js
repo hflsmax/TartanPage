@@ -60,7 +60,7 @@ function getDining(){
 						message = "Closed"
 						rank = 4;
 					} else {
-						message = "Opening";
+						message = "Open";
 						rank = 0;
 					}
 				} else {
@@ -77,7 +77,7 @@ function getDining(){
 						message = "Closed"
 						rank = 4;
 					} else {
-						message = "Opening";
+						message = "Open";
 						rank = 0;
 					}
 				}
