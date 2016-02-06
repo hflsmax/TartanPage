@@ -13,7 +13,7 @@ function main() {
                     html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
                     $("#weather").html(html);
                     var hilo = [weather.high, weather.low]
-                    getCur(hilo)
+                    return getCur(hilo)
                 },
                 error: function(error) {
                     $("#weather").html('<p>'+error+'</p>');
@@ -27,7 +27,7 @@ function main() {
             url: "http://api.wunderground.com/api/1205bbca123028ac/conditions/q/PA/Pittsburgh.json",
             success: function(data) {
                 var cur = [data.current_observation.weather, data.current_observation.temp_f]
-                getDaily(hilo, cur)
+                return getDaily(hilo, cur)
             }
         })
     }
@@ -42,7 +42,7 @@ function main() {
                     var x = data.forecast.simpleforecast.forecastday[i]
                     lst.push([x.conditions, x.high.fahrenheit, x.low.fahrenheit])
                 }
-                getHourly(lst)
+                return getHourly(lst)
             }
         })
     }
@@ -56,13 +56,13 @@ function main() {
                 for (var i = data.hourly_forecast[0].FCTTIME.hour; i < 24; i++) {
                     hLst.push([data.hourly_forecast[i].condition])
                 }
-                finish(lst, hLst)
+                return finish(lst, hLst)
             }
         })
     }
 
     function finish(lst, hLst) {
-        return (lst, hLst)
+        return [lst, hLst]
     }
 
     getHilo()
