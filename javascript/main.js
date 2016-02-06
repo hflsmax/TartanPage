@@ -102,6 +102,8 @@ function updateClock() {
     var diningTimer = setTimeout(function () {
         updateDiningOptions();
     }, 60000);
+
+    updateDiningOptions();
     
     createClock();
 }
@@ -123,8 +125,8 @@ return 1;
 
 function getTime() {
     return {
-        hour: 10,
-        min: 55
+        hour: 2,
+        min: 2
     }
 }
 
@@ -149,6 +151,7 @@ function updateDiningOptions(){
             function toMin(t) {
                 return t.hour*60 + t.min;
             }
+            console.log(json.locations)
 
             for (var index in json.locations) {
 
@@ -200,7 +203,7 @@ function updateDiningOptions(){
                             message = "Closing in" + endDiffMin + "min";
                             rank = 2;
                         } else if (endDiffMin > 0 && startDiffMin < -60) {
-                            message = "Opening at" + opTime.start.hour + ":" + formatMin(place.strat.min);
+                            message = "Opening at" + opTime.start.hour + ":" + formatMin(opTime.start.min);
                             rank = 3;
                         } else if (endDiffMin > 0 && startDiffMin < 0) {
                             message = "Closed"
@@ -222,6 +225,7 @@ function updateDiningOptions(){
         }
     })
 }
+
 
 function putOnDiningOption(diningInfo) {
     var container = document.getElementById('diningContainer');
