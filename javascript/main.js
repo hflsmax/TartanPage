@@ -196,20 +196,49 @@ function updateDiningOptions(){
             for (var index in json.locations) {
 
                 var place = json.locations[index];
-                var opTime = null;
-                for (var index in place.times) {
-                    if (place.times[index].start.day == day) {
-                        opTime = place.times[index];
-                    }
+                var opTime = {};
+
+                function findStartOfThisDay(k) {
+                	for (var i = 0; i < place.times.length; i++) {
+                		if (place.times[i].start.day == k)
+                			return place.times[i].start;
+                	}
+                	return null;
                 }
-                if (opTime === null) {
-                    message = "Closed Today";
-                    rank = 5;
-                } else {
-                    var startDiff = timeDiff(time, opTime.start);
+                function findEndOfThisDay(k) {
+                	for (var i = 0; i < place.times.length; i++) {
+                		if (place.times[i].end.day == k)
+                			return place.times[i].end;
+                	}
+                	return null;
+                }
+
+            	for (var i = day; i >= 0; i--) {
+            		var startTime = findStartOfThisDay(i);
+            		if (startTime) {
+            			opTime.start = startTime;
+            			break;
+            		}
+            	}
+            	for (var i = day; i <= 6; i++) {
+            		var endTime = findEndOfThisDay(i);
+            		if (endTime) {
+            			opTime.end = endTime;
+            			break;
+            		}
+            	}
+
+            	if (!opTime.start ||
+            		!opTime.end ||
+            		toMin(timeDiff(opTime.start, opTime.end)) > 0) {
+            		message = "Closed Today";
+            		rank = 5;
+            	} else {
+                	var startDiff = timeDiff(time, opTime.start);
                     var endDiff = timeDiff(time, opTime.end);
                     var startDiffMin = toMin(startDiff);
                     var endDiffMin = toMin(endDiff);
+
 
                     function formatMin(x) {
                         if (x == 0) return "00";
@@ -253,12 +282,12 @@ function updateDiningOptions(){
                             rank = 0;
                         }
                     }
-                }
-                diningInfo.push({
-                    name: place.name,
-                    message: message,
-                    rank: rank
-                })
+	                diningInfo.push({
+	                    name: place.name,
+	                    message: message,
+	                    rank: rank
+	                })
+            	}
 
             }
             putOnDiningOption(diningInfo);
