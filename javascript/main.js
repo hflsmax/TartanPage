@@ -1,8 +1,8 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 var newDate, curMin, curHour, month, curDay, year;
-var bgIndex = -1;
-var bgMax = 7;
+var bgIndex = 0;
+var bgMax = 6;
 var funFact = "Carnegie Mellon's original campus architect is said to have modeled his design after a ship. The prow of the historic USS Pennsylvania rests atop Roberts Hall, which overlooks Panther Hollow and the Carnegie Museum complex. \n\
 In December 1955, professor Herbert Simon and business Ph.D. student Allen Newell made a breakthrough that would place them among the founders of artificial intelligence — inventing a programming language for computers to model complex human problem-solving processes.\n\
 The flat grassy area in the middle of campus known as \"the Cut\" was originally a huge ravine, deeper than the tennis courts area. Over the years, it was filled in with dirt removed when the school cut down a 43-foot hill for the College of Fine Arts building and a 56-foot hill to provide access to Forbes Avenue at Morewood. \n\
