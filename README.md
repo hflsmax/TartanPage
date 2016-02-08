@@ -1,4 +1,5 @@
 ### Errors(Things must be fixed):
+* Welcoming page doesn't look good
 * Links are under shade
 
 ### Bugs(Things should be fixed):
